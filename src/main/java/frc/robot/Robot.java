@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -17,8 +19,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
+  private Spark leftMotor1 = new Spark(0);
+  private Spark leftMotor2 = new Spark(1);
+  private Spark rightMotor1 = new Spark(2);
+  private Spark rightMotor2 = new Spark(3);
+
   private RobotContainer m_robotContainer;
 
+  private double startTime;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -62,11 +70,27 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    startTime = Timer.getFPGATimestamp();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    double time = Timer.getFPGATimestamp();
+    if(time - startTime < 3){
+      leftMotor1.set(0.5);
+      leftMotor2.set(0.5);
+      rightMotor1.set(-0.5);
+      rightMotor2.set(-0.5);
+    }
+    else{
+      leftMotor1.set(0);
+      leftMotor2.set(0);
+      rightMotor1.set(0);
+      rightMotor2.set(0);
+    }
+
+  }
 
   @Override
   public void teleopInit() {
@@ -81,7 +105,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    
+  }
 
   @Override
   public void testInit() {
