@@ -4,26 +4,21 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+public class DriveSubsystem extends SubsystemBase {
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public Command exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
-  }
+  private Spark leftMotorFront = new Spark(0);
+  private Spark leftMotorRear = new Spark(1);
+  private Spark rightMotorFront = new Spark(1);
+  private Spark rightMotorRear = new Spark(1);
+
+  private MecanumDrive m_Drive = new MecanumDrive(leftMotorFront, leftMotorRear, rightMotorFront, rightMotorRear);
+
+  /** Creates a new ExampleSubsystem. */
+  public DriveSubsystem() {}
 
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
@@ -44,4 +39,9 @@ public class ExampleSubsystem extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
+
+  public void driveMotors(double xSpeed, double ySpeed, double zRotation) {
+    m_Drive.driveCartesian(xSpeed, ySpeed, zRotation);
+  }
+
 }
