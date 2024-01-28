@@ -8,6 +8,8 @@ import frc.robot.commands.MechanumDriveCmd;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.General;
+import frc.robot.Constants.MechanumDriveConstants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,19 +20,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
-  private final Joystick joystick = new Joystick(0);
+  private final Joystick joystick = new Joystick(General.JOYSTICK_PORT);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
 
-    m_DriveSubsystem.setDefaultCommand(new MechanumDriveCmd(m_DriveSubsystem, () -> -joystick.getRawAxis(1), () -> joystick.getRawAxis(2), () -> joystick.getRawAxis(4)));
+    m_DriveSubsystem.setDefaultCommand(new MechanumDriveCmd(m_DriveSubsystem, 
+      () -> -joystick.getRawAxis(MechanumDriveConstants.JOYSTICK_X_SPEED_AXIS), 
+      () -> joystick.getRawAxis(MechanumDriveConstants.JOYSTICK_Y_SPEED_AXIS), 
+      () -> joystick.getRawAxis(MechanumDriveConstants.JOYSTICK_Z_ROTATION_AXIS)));
+
     configureBindings();
   }
 
   private void configureBindings() {
-
-
+    ;
   }
 
 

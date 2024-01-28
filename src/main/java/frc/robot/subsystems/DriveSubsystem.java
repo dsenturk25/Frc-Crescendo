@@ -7,13 +7,14 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.MechanumDriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
-  private Spark leftMotorFront = new Spark(0);
-  private Spark leftMotorRear = new Spark(1);
-  private Spark rightMotorFront = new Spark(1);
-  private Spark rightMotorRear = new Spark(1);
+  private Spark leftMotorFront = new Spark(MechanumDriveConstants.LEFT_MOTOR_FRONT_PORT);
+  private Spark leftMotorRear = new Spark(MechanumDriveConstants.LEFT_MOTOR_REAR_PORT);
+  private Spark rightMotorFront = new Spark(MechanumDriveConstants.RIGHT_MOTOR_FRONT_PORT);
+  private Spark rightMotorRear = new Spark(MechanumDriveConstants.RIGHT_MOTOR_REAR_PORT);
 
   private MecanumDrive m_Drive = new MecanumDrive(leftMotorFront, leftMotorRear, rightMotorFront, rightMotorRear);
 
