@@ -21,6 +21,8 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
     rightMotorFront.setInverted(true);
     rightMotorRear.setInverted(true);
+  
+    m_Drive.setDeadband(0.05);
   }
 
   public boolean exampleCondition() {

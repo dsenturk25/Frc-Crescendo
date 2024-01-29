@@ -20,4 +20,27 @@ public final class Constants {
     public static final int RIGHT_MOTOR_FRONT_PORT = 3;
     public static final int RIGHT_MOTOR_REAR_PORT = 4;
   }
+
+  public static class IntakeConstants {
+    public static final double INTAKE_DEGREE = 10.0;
+    public static final double LOWER_THROW_DEGREE = 30.0;
+    public static final double CANON_FEEDER_DEGREE = 100.0;
+
+    public static final double kP = 0.1;
+    public static final double kI = 1;
+    public static final double kD = 0.1;
+
+    public static final double kI_LIMIT = 5;
+
+    public static final int ARM_MOTOR_PORT = 5;
+
+    public static final int ENCODER_SOURCE_A = 5;
+    public static final int ENCODER_SOURCE_B = 6;
+
+    public static final double K_ARM_TICK_2_DEG = 360.0 / 512 * 26 / 42 * 18 / 60 * 18 / 84;
+
+    public static final int JOYSTICK_ARM_LOW_BUTTON = 4;
+    public static final int JOYSTICK_ARM_MEDIUM_BUTTON = 5;
+    public static final int JOYSTICK_ARM_HIGH_BUTTON = 6;
+  }
 }

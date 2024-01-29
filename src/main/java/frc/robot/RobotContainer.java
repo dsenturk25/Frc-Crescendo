@@ -4,11 +4,15 @@
 
 package frc.robot;
 
+import frc.robot.commands.IntakeArmCmd;
 import frc.robot.commands.MechanumDriveCmd;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.General;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.MechanumDriveConstants;
 
 /**
@@ -18,8 +22,10 @@ import frc.robot.Constants.MechanumDriveConstants;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  
   private final DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+
   private final Joystick joystick = new Joystick(General.JOYSTICK_PORT);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -35,7 +41,10 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    ;
+    
+    new JoystickButton(joystick, IntakeConstants.JOYSTICK_ARM_LOW_BUTTON).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 0));
+    new JoystickButton(joystick, IntakeConstants.JOYSTICK_ARM_MEDIUM_BUTTON).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 1));
+    new JoystickButton(joystick, IntakeConstants.JOYSTICK_ARM_HIGH_BUTTON).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 2));
   }
 
 
