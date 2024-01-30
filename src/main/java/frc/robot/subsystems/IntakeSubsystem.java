@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,6 +17,8 @@ public class IntakeSubsystem extends SubsystemBase {
     };
 
     private Spark armMotor = new Spark(IntakeConstants.ARM_MOTOR_PORT);
+    private Spark intakeLeftMotor=new Spark(IntakeConstants.INTAKE_LEFTMOTOR_PORT );
+    private Spark intakeRightMotor=new Spark(IntakeConstants.INTAKE_RIGHTMOTOR_PORT );
 
     private PIDController m_pidController = new PIDController(
         IntakeConstants.kP, 
@@ -50,5 +53,17 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void setArmAngle(int setpointIndex) {
         armMotor.set(m_pidController.calculate(getEncoderDegree(), armLevelMapping[setpointIndex]));
+    }
+
+    public void setIntake(boolean isTaking){
+        
+        if(isTaking){
+            intakeLeftMotor.set(0.7);
+            intakeRightMotor.set(0.7);
+        }
+        else{
+            intakeLeftMotor.set(-0.7);
+            intakeRightMotor.set(-0.7);
+        }
     }
 }

@@ -52,6 +52,7 @@ public class RobotContainer {
     new JoystickButton(joystick, IntakeConstants.JOYSTICK_ARM_HIGH_BUTTON).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 2));
     new JoystickButton(joystick, ClimbConstants.CLIMB_UP_BUTTON).whileTrue(new ClimbCmd(m_ClimbSubsystem, ClimbConstants.CLIMB_SPEED)); 
     new JoystickButton(joystick, ClimbConstants.CLIMB_DOWN_BUTTON).whileTrue(new ClimbCmd(m_ClimbSubsystem, -ClimbConstants.CLIMB_SPEED)); 
+    new JoystickButton(joystick, IntakeConstants.INTAKE_JOYSTICK_PORT).whileTrue(null);
   }
 
 
