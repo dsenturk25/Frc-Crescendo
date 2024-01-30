@@ -1,12 +1,16 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ClimbConstants;;
 
 public class ClimbSubsystem extends SubsystemBase {
 
-    // Motor
+    private Spark climbMotor = new Spark(ClimbConstants.CLIMB_MOTOR_PORT);
 
-    public ClimbSubsystem() {}
+    public ClimbSubsystem() {
+        climbMotor.setInverted(false);
+    }
 
     public boolean exampleCondition() {
         return false;
@@ -20,6 +24,7 @@ public class ClimbSubsystem extends SubsystemBase {
     public void simulationPeriodic() {
     }
 
-    // Motorları çalıştıran fonksiyon
-    
+    public void setMotor(double speed){
+        climbMotor.set(speed);
+    }
 }

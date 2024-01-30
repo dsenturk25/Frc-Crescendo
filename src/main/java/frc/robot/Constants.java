@@ -43,4 +43,12 @@ public final class Constants {
     public static final int JOYSTICK_ARM_MEDIUM_BUTTON = 5;
     public static final int JOYSTICK_ARM_HIGH_BUTTON = 6;
   }
+
+  public static class ClimbConstants {
+    public static final int CLIMB_MOTOR_PORT = 7;
+
+    public static final int CLIMB_UP_BUTTON = 6;
+    public static final int CLIMB_DOWN_BUTTON = 7;
+    public static final double CLIMB_SPEED = 0.5;
+  }
 }
