@@ -17,7 +17,7 @@ import frc.robot.Constants.General;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.MechanumDriveConstants;
 import frc.robot.commands.ClimbCmd;
-import frc.robot.commands.DriveForwardCmd;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,8 +32,8 @@ public class RobotContainer {
   private final ClimbSubsystem m_ClimbSubsystem = new ClimbSubsystem();
 
 
-  private final Joystick joystick = new Joystick(General.JOYSTICK_PORT);
-
+  private final XboxController joystick = new XboxController(General.JOYSTICK_PORT);
+;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
