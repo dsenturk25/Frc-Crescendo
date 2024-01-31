@@ -15,10 +15,10 @@ public final class Constants {
     public static final int JOYSTICK_Y_SPEED_AXIS = 1;
     public static final int JOYSTICK_Z_ROTATION_AXIS = 4;
 
-    public static final int LEFT_MOTOR_FRONT_PORT = 1;
-    public static final int LEFT_MOTOR_REAR_PORT = 2;
-    public static final int RIGHT_MOTOR_FRONT_PORT = 3;
-    public static final int RIGHT_MOTOR_REAR_PORT = 4;
+    public static final int LEFT_MOTOR_FRONT_PORT = 0;
+    public static final int LEFT_MOTOR_REAR_PORT = 1;
+    public static final int RIGHT_MOTOR_FRONT_PORT = 13;
+    public static final int RIGHT_MOTOR_REAR_PORT = 14;
   }
 
   public static class IntakeConstants {
@@ -51,5 +51,13 @@ public final class Constants {
     public static final int CLIMB_DOWN_BUTTON = 7;
     public static final double CLIMB_SPEED = 0.5;
     // sa
+  }
+  public static class ShooterConstants {
+    public static final int SHOOT_MOTOR_PORT = 0; //not true value
+    
+    public static final int SHOOT_LOW_BUTTON = 1; //not true value
+    public static final int SHOOT_HIGH_BUTTON = 2; //not true value
+    public static final int HIGH_SHOOT_SPEED = 3; //not true value
+    public static final int LOW_SHOOT_SPEED = 1; //not true value
   }
 }

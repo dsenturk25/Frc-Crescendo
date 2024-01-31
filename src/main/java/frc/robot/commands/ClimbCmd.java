@@ -22,7 +22,7 @@ public class ClimbCmd extends Command {
 
   @Override
   public void initialize() {
-    System.out.println("ClimberJoystickCmd started!");
+    System.out.println("ClimbCmd started!");
   }
 
   @Override
@@ -34,7 +34,7 @@ public class ClimbCmd extends Command {
   @Override
   public void end(boolean interrupted) {
     climbSubsystem.setMotor(0);
-    System.out.println("ClimberJoystickCmd ended!");
+    System.out.println("ClimbCmd ended!");
   }
 
   @Override
