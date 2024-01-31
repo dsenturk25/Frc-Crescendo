@@ -5,6 +5,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -13,10 +14,14 @@ public class DriveForwardCmd extends Command {
 
     private DriveSubsystem driveSubsystem;
     private double speed;
+    private double startTimestamp;
+    private double time;
 
-    public DriveForwardCmd(DriveSubsystem driveSubsystem, double speed){
+    public DriveForwardCmd(DriveSubsystem driveSubsystem, double speed, double time){
         this.driveSubsystem = driveSubsystem;
         this.speed = speed;
+        this.startTimestamp = Timer.getFPGATimestamp();
+        this.time = time;
         addRequirements();
     }
 
@@ -27,7 +32,9 @@ public class DriveForwardCmd extends Command {
 
   @Override
   public void execute() {
-    driveSubsystem.driveMotors(0, speed, 0);
+    if ((Timer.getFPGATimestamp() - startTimestamp) < (time * 0.9) /* Will cut power to stop */) {
+      driveSubsystem.driveMotors(speed, 0, 0);
+    }
   }
 
   @Override

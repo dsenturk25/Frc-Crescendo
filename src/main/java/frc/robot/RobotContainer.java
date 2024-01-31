@@ -6,17 +6,28 @@ package frc.robot;
 
 import frc.robot.commands.IntakeArmCmd;
 import frc.robot.commands.MechanumDriveCmd;
+import frc.robot.commands.ShootCmd;
+import frc.robot.commands.TurnAroundCmd;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.subsystems.PoseSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.General;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.MechanumDriveConstants;
+import frc.robot.commands.AlignAprilCmd;
+import frc.robot.commands.AlignObjectCmd;
 import frc.robot.commands.ClimbCmd;
+import frc.robot.commands.DriveForwardCmd;
+
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
@@ -27,15 +38,20 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class RobotContainer {
   
+  private final XboxController joystick = new XboxController(General.JOYSTICK_PORT);
+  private final PhotonCamera aprilPhotonCamera = new PhotonCamera(AutonomousConstants.APRIL_CAMERA_NAME);
+  // private final PhotonCamera objectPhotonCamera = new PhotonCamera(AutonomousConstants.OBJECT_CAMERA_NAME);
+
   private final DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final ClimbSubsystem m_ClimbSubsystem = new ClimbSubsystem();
+  private final PoseSubsystem m_PoseSubsystem = new PoseSubsystem(aprilPhotonCamera, m_DriveSubsystem);
+  private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
 
-
-  private final XboxController joystick = new XboxController(General.JOYSTICK_PORT);
 ;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    
     // Configure the trigger bindings
 
     m_DriveSubsystem.setDefaultCommand(new MechanumDriveCmd(m_DriveSubsystem, 
@@ -57,6 +73,14 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    return null;
+    return new SequentialCommandGroup(
+      new DriveForwardCmd(m_DriveSubsystem, AutonomousConstants.DRIVE_FORWARD_SPEED, AutonomousConstants.DRIVE_FORWARD_TIME),
+      new TurnAroundCmd(m_DriveSubsystem, AutonomousConstants.TURN_SPEED),  // will configure to work with Gyro
+      new AlignObjectCmd(m_DriveSubsystem, aprilPhotonCamera),
+      /* Approach Intake Command - Doğu */
+      new AlignAprilCmd(m_PoseSubsystem),
+      new IntakeArmCmd(m_IntakeSubsystem, 2),
+      new ShootCmd(m_ShooterSubsystem, 0)
+    );
   }
 }

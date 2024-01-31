@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MechanumDriveConstants;
@@ -24,12 +26,17 @@ public class DriveSubsystem extends SubsystemBase {
   Translation2d m_backLeftLocation = new Translation2d(-MechanumDriveConstants.MECHANUM_WHEEL_LOCATION, MechanumDriveConstants.MECHANUM_WHEEL_LOCATION);
   Translation2d m_backRightLocation = new Translation2d(-MechanumDriveConstants.MECHANUM_WHEEL_LOCATION, -MechanumDriveConstants.MECHANUM_WHEEL_LOCATION);
 
-
   MecanumDriveKinematics m_MecanumDriveKinematics = new MecanumDriveKinematics(m_frontRightLocation, m_frontLeftLocation, m_backRightLocation, m_backLeftLocation);
+
+  PIDController turnPidController = new PIDController(0, 0, 0);
+  PIDController posePidController = new PIDController(0, 0, 0);
 
   public DriveSubsystem() {
     rightMotorFront.setInverted(true);
-    rightMotorRear.setInverted(true);  
+    rightMotorRear.setInverted(true);
+    
+    posePidController.setIZone(0.2);
+    turnPidController.setIZone(Units.degreesToRadians(5));
   }
 
   public boolean exampleCondition() {
@@ -56,4 +63,16 @@ public class DriveSubsystem extends SubsystemBase {
     rightMotorFront.set(wheelSpeeds.frontRightMetersPerSecond);
     rightMotorRear.set(wheelSpeeds.rearRightMetersPerSecond);
   }
+
+  public void turnPID(double yaw) {
+    driveMotors(0, 0, turnPidController.calculate(0, yaw));
+  }
+
+  public void drivePID(double x, double y, double angle) {
+    driveMotors(
+      posePidController.calculate(0, x), 
+      posePidController.calculate(0, y), 
+      turnPidController.calculate(0, angle));
+  }
+
 }
