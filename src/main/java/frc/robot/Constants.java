@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.Measure;
+
 public final class Constants {
 
   public static class General {
@@ -19,6 +22,7 @@ public final class Constants {
     public static final int LEFT_MOTOR_REAR_PORT = 1;
     public static final int RIGHT_MOTOR_FRONT_PORT = 0;
     public static final int RIGHT_MOTOR_REAR_PORT = 3;
+    public static final double MECHANUM_WHEEL_LOCATION = 0.381;  // in meters
   }
 
   public static class IntakeConstants {
