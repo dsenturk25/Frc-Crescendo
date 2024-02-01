@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.commands.IntakeArmCmd;
+import frc.robot.commands.IntakeMotorCmd;
 import frc.robot.commands.MechanumDriveCmd;
 import frc.robot.commands.ShootCmd;
 import frc.robot.commands.TurnAroundCmd;
@@ -23,6 +24,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.MechanumDriveConstants;
 import frc.robot.commands.AlignAprilCmd;
 import frc.robot.commands.AlignObjectCmd;
+import frc.robot.commands.AutonomusIntakeCmd;
 import frc.robot.commands.ClimbCmd;
 import frc.robot.commands.DriveForwardCmd;
 
@@ -40,7 +42,7 @@ public class RobotContainer {
   
   private final XboxController joystick = new XboxController(General.JOYSTICK_PORT);
   private final PhotonCamera aprilPhotonCamera = new PhotonCamera(AutonomousConstants.APRIL_CAMERA_NAME);
-  // private final PhotonCamera objectPhotonCamera = new PhotonCamera(AutonomousConstants.OBJECT_CAMERA_NAME);
+  private final PhotonCamera objectPhotonCamera = new PhotonCamera(AutonomousConstants.OBJECT_CAMERA_NAME);
 
   private final DriveSubsystem m_DriveSubsystem = new DriveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
@@ -69,6 +71,8 @@ public class RobotContainer {
     new JoystickButton(joystick, IntakeConstants.JOYSTICK_ARM_HIGH_BUTTON).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 2));
     new JoystickButton(joystick, ClimbConstants.CLIMB_UP_BUTTON).whileTrue(new ClimbCmd(m_ClimbSubsystem, ClimbConstants.CLIMB_SPEED)); 
     new JoystickButton(joystick, ClimbConstants.CLIMB_DOWN_BUTTON).whileTrue(new ClimbCmd(m_ClimbSubsystem, -ClimbConstants.CLIMB_SPEED)); 
+    new JoystickButton(joystick, IntakeConstants.INTAKE_JOYSTICK_PORT).whileTrue(new IntakeMotorCmd(m_IntakeSubsystem, true));
+    new JoystickButton(joystick, IntakeConstants.INTAKE_JOYSTICK_PORT).whileFalse(new IntakeMotorCmd(m_IntakeSubsystem, false));
   }
 
 
@@ -76,8 +80,8 @@ public class RobotContainer {
     return new SequentialCommandGroup(
       new DriveForwardCmd(m_DriveSubsystem, AutonomousConstants.DRIVE_FORWARD_SPEED, AutonomousConstants.DRIVE_FORWARD_TIME),
       new TurnAroundCmd(m_DriveSubsystem, AutonomousConstants.TURN_SPEED),  // will configure to work with Gyro
-      new AlignObjectCmd(m_DriveSubsystem, aprilPhotonCamera),
-      /* Approach Intake Command - Doğu */
+      new AlignObjectCmd(m_DriveSubsystem, objectPhotonCamera),
+      new AutonomusIntakeCmd(objectPhotonCamera, m_IntakeSubsystem, m_DriveSubsystem),
       new AlignAprilCmd(m_PoseSubsystem),
       new IntakeArmCmd(m_IntakeSubsystem, 2),
       new ShootCmd(m_ShooterSubsystem, 0)

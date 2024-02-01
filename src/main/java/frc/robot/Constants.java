@@ -57,6 +57,12 @@ public final class Constants {
     public static final int JOYSTICK_ARM_LOW_BUTTON = 4;
     public static final int JOYSTICK_ARM_MEDIUM_BUTTON = 5;
     public static final int JOYSTICK_ARM_HIGH_BUTTON = 6;
+
+    public static final int INTAKE_LEFTMOTOR_PORT = 5;
+    public static final int INTAKE_RIGHTMOTOR_PORT = 5;
+    public static final double INTAKE_MOTOR_SPEED = 0.5;
+
+    public static final int INTAKE_JOYSTICK_PORT = 7;
   }
 
   public static class ClimbConstants {
@@ -77,5 +83,12 @@ public final class Constants {
 
     public static final String APRIL_CAMERA_NAME = "";
     public static final String OBJECT_CAMERA_NAME = "";
+
+    public static final double INTAKE_DRIVE_FORWARD_SPEED = 0.5;
+
+    public static final double INTAKE_SPEED = 0.5;
+    public static final double INTAKE_TIME = 1;  // second
+
+    public static final double MAX_CONTOUR_AREA_PERCENTAGE = 90.0;
   }
 }
