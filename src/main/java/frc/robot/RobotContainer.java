@@ -66,13 +66,13 @@ public class RobotContainer {
 
   private void configureBindings() {
     
-    new JoystickButton(joystick, IntakeConstants.JOYSTICK_ARM_LOW_BUTTON).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 0));
-    new JoystickButton(joystick, IntakeConstants.JOYSTICK_ARM_MEDIUM_BUTTON).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 1));
-    new JoystickButton(joystick, IntakeConstants.JOYSTICK_ARM_HIGH_BUTTON).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 2));
-    new JoystickButton(joystick, ClimbConstants.CLIMB_UP_BUTTON).whileTrue(new ClimbCmd(m_ClimbSubsystem, ClimbConstants.CLIMB_SPEED)); 
-    new JoystickButton(joystick, ClimbConstants.CLIMB_DOWN_BUTTON).whileTrue(new ClimbCmd(m_ClimbSubsystem, -ClimbConstants.CLIMB_SPEED)); 
-    new JoystickButton(joystick, IntakeConstants.INTAKE_JOYSTICK_PORT).whileTrue(new IntakeMotorCmd(m_IntakeSubsystem, true));
-    new JoystickButton(joystick, IntakeConstants.INTAKE_JOYSTICK_PORT).whileFalse(new IntakeMotorCmd(m_IntakeSubsystem, false));
+    new JoystickButton(joystick, XboxController.Button.kA.value).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 0));
+    new JoystickButton(joystick, XboxController.Button.kB.value).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 1));
+    new JoystickButton(joystick, XboxController.Button.kY.value).whileTrue(new IntakeArmCmd(m_IntakeSubsystem, 2));
+    new JoystickButton(joystick, XboxController.Button.kRightBumper.value).whileTrue(new ClimbCmd(m_ClimbSubsystem, ClimbConstants.CLIMB_SPEED)); 
+    new JoystickButton(joystick, XboxController.Button.kLeftBumper.value).whileTrue(new ClimbCmd(m_ClimbSubsystem, -ClimbConstants.CLIMB_SPEED)); 
+    new JoystickButton(joystick, XboxController.Axis.kLeftTrigger.value).whileTrue(new IntakeMotorCmd(m_IntakeSubsystem, true));
+    new JoystickButton(joystick, XboxController.Axis.kLeftTrigger.value).whileFalse(new IntakeMotorCmd(m_IntakeSubsystem, false));
   }
 
 
