@@ -22,7 +22,7 @@ public class MechanumDriveCmd extends Command {
     this.xSpeedFunction = xSpeedFunction;
     this.ySpeedFunction = ySpeedFunction;
     this.rotationFunction = rotationFunction;
-    addRequirements();
+    addRequirements(this.driveSubsystem);
   }
 
   // Called when the command is initially scheduled.

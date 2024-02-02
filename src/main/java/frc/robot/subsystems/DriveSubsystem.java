@@ -56,12 +56,24 @@ public class DriveSubsystem extends SubsystemBase {
     double rotationToRad = zRotation * Math.PI;
 
     ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, rotationToRad);
+    double mFL = chassisSpeeds.vyMetersPerSecond + chassisSpeeds.vxMetersPerSecond + chassisSpeeds.omegaRadiansPerSecond;
+    double mFR = chassisSpeeds.vyMetersPerSecond + chassisSpeeds.vxMetersPerSecond - chassisSpeeds.omegaRadiansPerSecond;
+    double mRL = chassisSpeeds.vyMetersPerSecond - chassisSpeeds.vxMetersPerSecond + chassisSpeeds.omegaRadiansPerSecond;
+    double mRR = chassisSpeeds.vyMetersPerSecond - chassisSpeeds.vxMetersPerSecond - chassisSpeeds.omegaRadiansPerSecond;
     MecanumDriveWheelSpeeds wheelSpeeds = m_MecanumDriveKinematics.toWheelSpeeds(chassisSpeeds);
 
-    leftMotorFront.set(wheelSpeeds.frontLeftMetersPerSecond);
-    leftMotorRear.set(wheelSpeeds.rearLeftMetersPerSecond);
-    rightMotorFront.set(wheelSpeeds.frontRightMetersPerSecond);
-    rightMotorRear.set(wheelSpeeds.rearRightMetersPerSecond);
+    if(Math.abs(chassisSpeeds.omegaRadiansPerSecond) > 0.5){
+      leftMotorFront.set(mFL * 0.5);
+      leftMotorRear.set(mRL * 0.5);
+      rightMotorFront.set(mFR * 0.5);
+      rightMotorRear.set(mRR * 0.5);
+    }
+    else{
+      leftMotorFront.set(wheelSpeeds.frontLeftMetersPerSecond * 0.5);
+      leftMotorRear.set(wheelSpeeds.rearLeftMetersPerSecond * 0.5);
+      rightMotorFront.set(wheelSpeeds.frontRightMetersPerSecond * 0.5);
+      rightMotorRear.set(wheelSpeeds.rearRightMetersPerSecond * 0.5);
+    }
   }
 
   public void turnPID(double yaw) {

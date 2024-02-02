@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonUtils;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -9,7 +8,6 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 import frc.robot.Constants.AutonomousConstants;
-import frc.robot.Constants.IntakeConstants;
 
 public class AutonomusIntakeCmd extends Command {
     
