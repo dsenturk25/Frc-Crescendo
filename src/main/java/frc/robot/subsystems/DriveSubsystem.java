@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MechanumDriveConstants;
@@ -27,6 +28,8 @@ public class DriveSubsystem extends SubsystemBase {
   Translation2d m_backRightLocation = new Translation2d(-MechanumDriveConstants.MECHANUM_WHEEL_LOCATION, -MechanumDriveConstants.MECHANUM_WHEEL_LOCATION);
 
   MecanumDriveKinematics m_MecanumDriveKinematics = new MecanumDriveKinematics(m_frontRightLocation, m_frontLeftLocation, m_backRightLocation, m_backLeftLocation);
+
+  MecanumDrive m_Drive = new MecanumDrive(leftMotorFront, leftMotorRear, rightMotorFront, rightMotorRear);
 
   PIDController turnPidController = new PIDController(0, 0, 0);
   PIDController posePidController = new PIDController(0, 0, 0);
@@ -51,7 +54,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void simulationPeriodic() {
   }
 
-  public void driveMotors(double xSpeed, double ySpeed, double zRotation) {
+  public void driveMotors(double xSpeed, double ySpeed, double zRotation) {  // First Method: Most optimal
 
     double rotationToRad = zRotation * Math.PI;
 
@@ -73,6 +76,63 @@ public class DriveSubsystem extends SubsystemBase {
       posePidController.calculate(0, x), 
       posePidController.calculate(0, y), 
       turnPidController.calculate(0, angle));
+  }
+
+
+  public double getMagnitude(double xSpeed, double ySpeed) {  // Second Method
+    return Math.hypot(xSpeed, ySpeed);
+  }
+
+  public double getAngle(double xSpeed, double ySpeed) {  // Second Method
+    return Math.atan2(ySpeed, xSpeed);
+  }
+
+  public double getMax(double[] arr) {  // Second Method
+    double max = 0;
+
+    for (double d : arr) {
+      max = d >= max ? d : max;
+    }
+    return max;
+  }
+
+  public double[] normalizeSpeeds(double[] speedsArray) {
+    double max = getMax(speedsArray);
+    for (int i = 0; i < speedsArray.length; i++) {
+      speedsArray[i] /= max;
+    }
+
+    return speedsArray;
+  }
+
+  public void driveMotorsManual(double xSpeed, double ySpeed, double zRotation) {  // Second Method
+    double magnitude = getMagnitude(xSpeed, ySpeed);
+    double angle = getAngle(xSpeed, ySpeed);
+
+    double xComponent = magnitude * Math.cos(angle - Units.degreesToRadians(45));
+    double yComponent = magnitude * Math.sin(angle - Units.degreesToRadians(45));
+
+    double threshold = MechanumDriveConstants.SPEED_THRESHOLD;
+
+    double lf = (xComponent * threshold) + zRotation;
+    double rr = (xComponent * threshold) - zRotation;
+    double lr = (yComponent * threshold) + zRotation;
+    double rf = (yComponent * threshold) - zRotation;
+
+    double[] speedsArray = {lf, lr, rf, rr};
+
+    double[] normalizedArray = normalizeSpeeds(speedsArray);
+
+    leftMotorFront.set(normalizedArray[0]);
+    leftMotorRear.set(normalizedArray[1]);
+
+    rightMotorFront.set(normalizedArray[2]);
+    rightMotorRear.set(normalizedArray[3]);
+  }
+
+  
+  public void driveMotorsCartesian(double xSpeed, double ySpeed, double zRotation) {  // Third Method
+    m_Drive.driveCartesian(xSpeed, ySpeed, zRotation);
   }
 
 }

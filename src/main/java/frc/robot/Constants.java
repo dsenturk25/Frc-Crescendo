@@ -25,6 +25,8 @@ public final class Constants {
     public static final int RIGHT_MOTOR_REAR_PORT = 14;
 
     public static final double MECHANUM_WHEEL_LOCATION = 0.381;  // in meters
+
+    public static final double SPEED_THRESHOLD = 0.75;
   }
 
   public static class ShooterConstants {
