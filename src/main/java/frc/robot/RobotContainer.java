@@ -22,6 +22,7 @@ import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.General;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.MechanumDriveConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AlignAprilCmd;
 import frc.robot.commands.AlignObjectCmd;
 import frc.robot.commands.AutonomusIntakeCmd;
@@ -73,6 +74,7 @@ public class RobotContainer {
     new JoystickButton(joystick, XboxController.Button.kLeftBumper.value).whileTrue(new ClimbCmd(m_ClimbSubsystem, -ClimbConstants.CLIMB_SPEED)); 
     new JoystickButton(joystick, XboxController.Axis.kLeftTrigger.value).whileTrue(new IntakeMotorCmd(m_IntakeSubsystem, true));
     new JoystickButton(joystick, XboxController.Axis.kLeftTrigger.value).whileFalse(new IntakeMotorCmd(m_IntakeSubsystem, false));
+    new JoystickButton(joystick, XboxController.Axis.kRightTrigger.value).whileTrue(new ShootCmd(m_ShooterSubsystem, () -> joystick.getRawAxis(IntakeConstants.RIGHT_TRIGGER_PORT)));
   }
 
 
@@ -84,7 +86,7 @@ public class RobotContainer {
       new AutonomusIntakeCmd(objectPhotonCamera, m_IntakeSubsystem, m_DriveSubsystem),
       new AlignAprilCmd(m_PoseSubsystem),
       new IntakeArmCmd(m_IntakeSubsystem, 2),
-      new ShootCmd(m_ShooterSubsystem, 0)
+      new ShootCmd(m_ShooterSubsystem, () -> ShooterConstants.AUTONOMOUS_SHOOT_SPEED)
     );
   }
 }

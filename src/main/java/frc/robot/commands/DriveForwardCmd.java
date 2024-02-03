@@ -22,7 +22,7 @@ public class DriveForwardCmd extends Command {
         this.speed = speed;
         this.startTimestamp = Timer.getFPGATimestamp();
         this.time = time;
-        addRequirements();
+        addRequirements(driveSubsystem);
     }
 
   @Override

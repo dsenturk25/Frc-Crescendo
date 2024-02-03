@@ -36,6 +36,8 @@ public final class Constants {
     public static final int SHOOT_HIGH_BUTTON = 2; //not true value
     public static final int HIGH_SHOOT_SPEED = 3; //not true value
     public static final int LOW_SHOOT_SPEED = 1; //not true value
+
+    public static final double AUTONOMOUS_SHOOT_SPEED = 0.8;
   }
 
   public static class IntakeConstants {
@@ -65,6 +67,8 @@ public final class Constants {
     public static final double INTAKE_MOTOR_SPEED = 0.5;
 
     public static final int INTAKE_JOYSTICK_PORT = 7;
+
+    public static final int RIGHT_TRIGGER_PORT = 4;
   }
 
   public static class ClimbConstants {

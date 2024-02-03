@@ -1,18 +1,19 @@
 
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootCmd extends Command {
 
     private final ShooterSubsystem shooterSubsystem;
-    private final double speed;
+    private final Supplier<Double> speedFunction;
 
-    public ShootCmd(ShooterSubsystem shooterSubsystem, double speed){
+    public ShootCmd(ShooterSubsystem shooterSubsystem, Supplier<Double> speedFunction){
         this.shooterSubsystem = shooterSubsystem;
-        this.speed = speed;
+        this.speedFunction = speedFunction;
         addRequirements(shooterSubsystem);
     }
 
@@ -23,16 +24,7 @@ public class ShootCmd extends Command {
 
   @Override
   public void execute() {
-    shooterSubsystem.setMotor(speed);
-    if(true){ //burasi olmadi
-        shooterSubsystem.setMotor(ShooterConstants.LOW_SHOOT_SPEED);
-        System.out.println("Robot is shooting higher");
-    }
-    else if(false){ //burasi olmadi
-        shooterSubsystem.setMotor(ShooterConstants.HIGH_SHOOT_SPEED);
-        System.out.println("Robot is shooting Lower");
-    }
-
+    shooterSubsystem.setMotor(speedFunction.get());
   }
 
   @Override
