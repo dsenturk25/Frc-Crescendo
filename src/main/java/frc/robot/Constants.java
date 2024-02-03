@@ -106,8 +106,13 @@ public final class Constants {
     public static final double kI_DRIVE = 0;
     public static final double kD_DRIVE = 0;
 
+    public static final double iZone_DRIVE = 0;
+
     public static final double kP_TURN = 0;
     public static final double kI_TURN = 0;
     public static final double kD_TURN = 0;
+
+
+    public static final double iZone_TURN = 0;  // in degrees
   }
 }

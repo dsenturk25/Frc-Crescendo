@@ -39,8 +39,8 @@ public class DriveSubsystem extends SubsystemBase {
     rightMotorFront.setInverted(true);
     rightMotorRear.setInverted(true);
     
-    posePidController.setIZone(0.2);
-    turnPidController.setIZone(Units.degreesToRadians(5));
+    posePidController.setIZone(AutonomousConstants.iZone_TURN);
+    turnPidController.setIZone(Units.degreesToRadians(AutonomousConstants.iZone_TURN));
   }
 
   public boolean exampleCondition() {
@@ -136,4 +136,22 @@ public class DriveSubsystem extends SubsystemBase {
     m_Drive.driveCartesian(xSpeed, ySpeed, zRotation);
   }
 
+  
+  public void driveMotorsDummy(double xSpeed, double ySpeed, double zRotation) {  // Fourth Method
+    
+    double lf = xSpeed + ySpeed + zRotation;
+    double lr = xSpeed - ySpeed + zRotation;
+    double rf = xSpeed + ySpeed - zRotation;
+    double rr = xSpeed - ySpeed - zRotation;
+
+    double[] speedsArray = {lf, lr, rf, rr};
+
+    double[] normalizedArray = normalizeSpeeds(speedsArray);
+
+    leftMotorFront.set(normalizedArray[0]);
+    leftMotorRear.set(normalizedArray[1]);
+
+    rightMotorFront.set(normalizedArray[2]);
+    rightMotorRear.set(normalizedArray[3]);
+  }
 }
