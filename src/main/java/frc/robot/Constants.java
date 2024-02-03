@@ -13,16 +13,27 @@ public final class Constants {
   public static class General {
     public static final int JOYSTICK_PORT = 0;
   }
+/*
+  Joystick Reference:
+
+ 0: Left Joystick Y axis
+ 1: Left Joystick X axis
+ 2: Left Trigger
+ 3: Right Trigger
+ 4: Right Joystick Y axis
+ 5: Right Joystick X axis
+
+ */
 
   public static class MechanumDriveConstants {
     public static final int JOYSTICK_X_SPEED_AXIS = 1;
-    public static final int JOYSTICK_Y_SPEED_AXIS = 2;
+    public static final int JOYSTICK_Y_SPEED_AXIS = 0;
     public static final int JOYSTICK_Z_ROTATION_AXIS = 4;
 
-    public static final int LEFT_MOTOR_FRONT_PORT = 0;
+    public static final int LEFT_MOTOR_FRONT_PORT = 2;
     public static final int LEFT_MOTOR_REAR_PORT = 1;
-    public static final int RIGHT_MOTOR_FRONT_PORT = 13;
-    public static final int RIGHT_MOTOR_REAR_PORT = 14;
+    public static final int RIGHT_MOTOR_FRONT_PORT = 0;
+    public static final int RIGHT_MOTOR_REAR_PORT = 3;
 
     public static final double MECHANUM_WHEEL_LOCATION = 0.381;  // in meters
 
@@ -30,7 +41,7 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int SHOOT_MOTOR_PORT = 0; //not true value
+    public static final int SHOOT_MOTOR_PORT = 4; //not true value
 
     public static final int SHOOT_LOW_BUTTON = 1; //not true value
     public static final int SHOOT_HIGH_BUTTON = 2; //not true value

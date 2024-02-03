@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutonomousConstants;
 import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.General;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.MechanumDriveConstants;
 import frc.robot.commands.AlignAprilCmd;
 import frc.robot.commands.AlignObjectCmd;
