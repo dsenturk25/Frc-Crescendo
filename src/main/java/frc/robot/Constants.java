@@ -76,6 +76,15 @@ public final class Constants {
   }
 
   public static class AutonomousConstants {
+
+    public static final double APRIL_1_X = 0;
+    public static final double APRIL_1_Y = 0;
+
+    public static final double APRIL_2_X = 0;
+    public static final double APRIL_2_Y = 0;
+
+    public static final double APRIL_Z = 0;
+
     public static final double DRIVE_FORWARD_SPEED = 0.5;
     public static final double DRIVE_FORWARD_TIME = 5.0;
 
@@ -92,5 +101,13 @@ public final class Constants {
     public static final double INTAKE_TIME = 1;  // second
 
     public static final double MAX_CONTOUR_AREA_PERCENTAGE = 90.0;
+
+    public static final double kP_DRIVE = 0;
+    public static final double kI_DRIVE = 0;
+    public static final double kD_DRIVE = 0;
+
+    public static final double kP_TURN = 0;
+    public static final double kI_TURN = 0;
+    public static final double kD_TURN = 0;
   }
 }

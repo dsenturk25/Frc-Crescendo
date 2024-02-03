@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MechanumDriveConstants;
+import frc.robot.Constants.AutonomousConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -31,8 +32,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   MecanumDrive m_Drive = new MecanumDrive(leftMotorFront, leftMotorRear, rightMotorFront, rightMotorRear);
 
-  PIDController turnPidController = new PIDController(0, 0, 0);
-  PIDController posePidController = new PIDController(0, 0, 0);
+  PIDController turnPidController = new PIDController(AutonomousConstants.kP_DRIVE, AutonomousConstants.kI_DRIVE, AutonomousConstants.kD_DRIVE);
+  PIDController posePidController = new PIDController(AutonomousConstants.kP_TURN, AutonomousConstants.kI_TURN, AutonomousConstants.kD_TURN);
 
   public DriveSubsystem() {
     rightMotorFront.setInverted(true);
