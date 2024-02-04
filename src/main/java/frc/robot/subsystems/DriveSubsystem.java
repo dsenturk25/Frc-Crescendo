@@ -57,15 +57,24 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void driveMotors(double xSpeed, double ySpeed, double zRotation) {  // First Method: Most optimal
 
-    double rotationToRad = zRotation * Math.PI;
-
-    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, rotationToRad);
+    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, 0);
     MecanumDriveWheelSpeeds wheelSpeeds = m_MecanumDriveKinematics.toWheelSpeeds(chassisSpeeds);
 
-    leftMotorFront.set(wheelSpeeds.frontLeftMetersPerSecond);
-    leftMotorRear.set(wheelSpeeds.rearLeftMetersPerSecond);
-    rightMotorFront.set(wheelSpeeds.frontRightMetersPerSecond);
-    rightMotorRear.set(wheelSpeeds.rearRightMetersPerSecond);
+    double lf = wheelSpeeds.frontLeftMetersPerSecond + zRotation;
+    double lr = wheelSpeeds.rearLeftMetersPerSecond + zRotation;
+
+    double rf = wheelSpeeds.frontLeftMetersPerSecond - zRotation;
+    double rr = wheelSpeeds.rearLeftMetersPerSecond - zRotation;
+    
+    double[] speedsArray = {lf, lr, rf, rr};
+
+    double[] normalizedArray = normalizeSpeeds(speedsArray);
+
+    leftMotorFront.set(normalizedArray[0]);
+    leftMotorRear.set(normalizedArray[1]);
+
+    rightMotorFront.set(normalizedArray[2]);
+    rightMotorRear.set(normalizedArray[3]);
   }
 
   public void turnPID(double yaw) {
@@ -88,17 +97,18 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.atan2(ySpeed, xSpeed);
   }
 
-  public double getMax(double[] arr) {  // Second Method
+  public double getAbsMax(double[] arr) {  // Second Method
     double max = 0;
 
     for (double d : arr) {
-      max = d >= max ? d : max;
+      if (d < 0) max = -d >= max ? -d : max;
+      else max = d >= max ? d : max;
     }
     return max;
   }
 
   public double[] normalizeSpeeds(double[] speedsArray) {
-    double max = getMax(speedsArray);
+    double max = getAbsMax(speedsArray);
     for (int i = 0; i < speedsArray.length; i++) {
       speedsArray[i] /= max;
     }
