@@ -24,7 +24,7 @@ public final class Constants {
     public static final int RIGHT_MOTOR_FRONT_PORT = 13;
     public static final int RIGHT_MOTOR_REAR_PORT = 14;
 
-    public static final double MECHANUM_WHEEL_LOCATION = 0.381;  // in meters
+    public static final double MECHANUM_WHEEL_LOCATION = 0.315;  // in meters
 
     public static final double SPEED_THRESHOLD = 0.75;
   }
@@ -41,6 +41,9 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
+
+    public static final int LIMIT_SWITCH_PORT = 10;
+
     public static final double INTAKE_DEGREE = 10.0;
     public static final double LOWER_THROW_DEGREE = 30.0;
     public static final double CANON_FEEDER_DEGREE = 100.0;

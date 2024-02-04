@@ -47,7 +47,7 @@ public class AutonomusIntakeCmd extends Command {
                 this.latestResultTimeStamp = pipelineResultTimestamp;
 
                 driveSubsystem.driveMotors(AutonomousConstants.INTAKE_DRIVE_FORWARD_SPEED * 0.25, 0, 0);
-                if ((Timer.getFPGATimestamp() - this.beforeIntakeTimestamp) > AutonomousConstants.INTAKE_TIME) {
+                if (intakeSubsystem.getLimitSwitchStatus()) {
                     intakeSubsystem.setIntake(false);
                 } else {
                     intakeSubsystem.setIntake(true);

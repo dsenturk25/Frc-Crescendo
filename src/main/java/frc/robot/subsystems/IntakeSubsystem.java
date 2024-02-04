@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -14,12 +15,13 @@ public class IntakeSubsystem extends SubsystemBase {
         IntakeConstants.LOWER_THROW_DEGREE,
         IntakeConstants.CANON_FEEDER_DEGREE
     };
-
+    
     private Spark armMotor = new Spark(IntakeConstants.ARM_MOTOR_PORT);
 
-    private Spark intakeLeftMotor=new Spark(IntakeConstants.INTAKE_LEFTMOTOR_PORT );
-    private Spark intakeRightMotor=new Spark(IntakeConstants.INTAKE_RIGHTMOTOR_PORT );
+    private Spark intakeLeftMotor = new Spark(IntakeConstants.INTAKE_LEFTMOTOR_PORT );
+    private Spark intakeRightMotor = new Spark(IntakeConstants.INTAKE_RIGHTMOTOR_PORT );
 
+    private DigitalInput intakeLimitSwitch = new DigitalInput(IntakeConstants.LIMIT_SWITCH_PORT);
 
     private PIDController m_pidController = new PIDController(
         IntakeConstants.kP, 
@@ -66,5 +68,9 @@ public class IntakeSubsystem extends SubsystemBase {
             intakeLeftMotor.set(-0.7);
             intakeRightMotor.set(-0.7);
         }
+    }
+
+    public Boolean getLimitSwitchStatus () {
+        return intakeLimitSwitch.get();
     }
 }
