@@ -61,10 +61,10 @@ public class DriveSubsystem extends SubsystemBase {
     MecanumDriveWheelSpeeds wheelSpeeds = m_MecanumDriveKinematics.toWheelSpeeds(chassisSpeeds);
 
     double lf = wheelSpeeds.frontLeftMetersPerSecond + zRotation;
-    double lr = wheelSpeeds.rearLeftMetersPerSecond + zRotation;
+    double lr = wheelSpeeds.rearLeftMetersPerSecond - zRotation;
 
-    double rf = wheelSpeeds.frontLeftMetersPerSecond - zRotation;
-    double rr = wheelSpeeds.rearLeftMetersPerSecond - zRotation;
+    double rf = wheelSpeeds.frontRightMetersPerSecond + zRotation;
+    double rr = wheelSpeeds.rearRightMetersPerSecond - zRotation;
     
     double[] speedsArray = {lf, lr, rf, rr};
 
@@ -109,8 +109,11 @@ public class DriveSubsystem extends SubsystemBase {
 
   public double[] normalizeSpeeds(double[] speedsArray) {
     double max = getAbsMax(speedsArray);
-    for (int i = 0; i < speedsArray.length; i++) {
-      speedsArray[i] /= max;
+
+    if (max > 1) {
+      for (int i = 0; i < speedsArray.length; i++) {
+        speedsArray[i] /= max;
+      }
     }
 
     return speedsArray;

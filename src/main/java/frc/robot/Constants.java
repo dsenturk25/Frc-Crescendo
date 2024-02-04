@@ -19,10 +19,10 @@ public final class Constants {
     public static final int JOYSTICK_Y_SPEED_AXIS = 2;
     public static final int JOYSTICK_Z_ROTATION_AXIS = 4;
 
-    public static final int LEFT_MOTOR_FRONT_PORT = 0;
-    public static final int LEFT_MOTOR_REAR_PORT = 1;
-    public static final int RIGHT_MOTOR_FRONT_PORT = 13;
-    public static final int RIGHT_MOTOR_REAR_PORT = 14;
+    public static final int LEFT_MOTOR_FRONT_PORT = 3;
+    public static final int LEFT_MOTOR_REAR_PORT = 0;
+    public static final int RIGHT_MOTOR_FRONT_PORT = 1;
+    public static final int RIGHT_MOTOR_REAR_PORT = 2;
 
     public static final double MECHANUM_WHEEL_LOCATION = 0.315;  // in meters
 
@@ -30,7 +30,7 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int SHOOT_MOTOR_PORT = 0; //not true value
+    public static final int SHOOT_MOTOR_PORT = 4; //not true value
 
     public static final int SHOOT_LOW_BUTTON = 1; //not true value
     public static final int SHOOT_HIGH_BUTTON = 2; //not true value
@@ -65,8 +65,8 @@ public final class Constants {
     public static final int JOYSTICK_ARM_MEDIUM_BUTTON = 5;
     public static final int JOYSTICK_ARM_HIGH_BUTTON = 6;
 
-    public static final int INTAKE_LEFTMOTOR_PORT = 5;
-    public static final int INTAKE_RIGHTMOTOR_PORT = 5;
+    public static final int INTAKE_LEFTMOTOR_PORT = 6;
+    public static final int INTAKE_RIGHTMOTOR_PORT = 7;
     public static final double INTAKE_MOTOR_SPEED = 0.5;
 
     public static final int INTAKE_JOYSTICK_PORT = 7;
@@ -75,7 +75,7 @@ public final class Constants {
   }
 
   public static class ClimbConstants {
-    public static final int CLIMB_MOTOR_PORT = 7;
+    public static final int CLIMB_MOTOR_PORT = 8;
 
     public static final int CLIMB_UP_BUTTON = 6;
     public static final int CLIMB_DOWN_BUTTON = 7;
@@ -119,7 +119,8 @@ public final class Constants {
     public static final double kI_TURN = 0;
     public static final double kD_TURN = 0;
 
-
     public static final double iZone_TURN = 0;  // in degrees
+
+  public static final double TURN_AROUND_TIME = 3;
   }
 }

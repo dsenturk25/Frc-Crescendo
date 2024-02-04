@@ -34,6 +34,8 @@ public class DriveForwardCmd extends Command {
   public void execute() {
     if ((Timer.getFPGATimestamp() - startTimestamp) < (time * 0.9) /* Will cut power to stop */) {
       driveSubsystem.driveMotors(speed, 0, 0);
+    } else {
+      end(true);
     }
   }
 
