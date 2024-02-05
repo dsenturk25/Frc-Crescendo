@@ -10,6 +10,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.ADIS16448_IMU;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.ADIS16448_IMU.CalibrationTime;
+import edu.wpi.first.wpilibj.ADIS16448_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -34,6 +38,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   PIDController turnPidController = new PIDController(AutonomousConstants.kP_DRIVE, AutonomousConstants.kI_DRIVE, AutonomousConstants.kD_DRIVE);
   PIDController posePidController = new PIDController(AutonomousConstants.kP_TURN, AutonomousConstants.kI_TURN, AutonomousConstants.kD_TURN);
+
+  ADIS16448_IMU gyro = new ADIS16448_IMU();
 
   public DriveSubsystem() {
     rightMotorFront.setInverted(true);
@@ -123,8 +129,8 @@ public class DriveSubsystem extends SubsystemBase {
     double magnitude = getMagnitude(xSpeed, ySpeed);
     double angle = getAngle(xSpeed, ySpeed);
 
-    double xComponent = magnitude * Math.cos(angle - Units.degreesToRadians(45));
-    double yComponent = magnitude * Math.sin(angle - Units.degreesToRadians(45));
+    double xComponent = magnitude * Math.cos(angle + Units.degreesToRadians(45));
+    double yComponent = magnitude * Math.sin(angle + Units.degreesToRadians(45));
 
     double threshold = MechanumDriveConstants.SPEED_THRESHOLD;
 
@@ -166,5 +172,36 @@ public class DriveSubsystem extends SubsystemBase {
 
     rightMotorFront.set(normalizedArray[2]);
     rightMotorRear.set(normalizedArray[3]);
+  }
+
+  public void driveMotorsMecanumSwerve(double xSpeed, double ySpeed, double zRotation) {
+    double magnitude = getMagnitude(xSpeed, ySpeed);
+    double angle = getAngle(xSpeed, ySpeed);
+
+    double cartesianAngle = angle + Units.degreesToRadians(45);
+
+    double xComponent = magnitude * Math.cos(cartesianAngle + gyro.getAngle());
+    double yComponent = magnitude * Math.sin(cartesianAngle + gyro.getAngle());
+
+    double threshold = MechanumDriveConstants.SPEED_THRESHOLD;
+
+    double lf = (xComponent * threshold) + zRotation;
+    double rr = (xComponent * threshold) - zRotation;
+    double lr = (yComponent * threshold) + zRotation;
+    double rf = (yComponent * threshold) - zRotation;
+
+    double[] speedsArray = {lf, lr, rf, rr};
+
+    double[] normalizedArray = normalizeSpeeds(speedsArray);
+
+    leftMotorFront.set(normalizedArray[0]);
+    leftMotorRear.set(normalizedArray[1]);
+
+    rightMotorFront.set(normalizedArray[2]);
+    rightMotorRear.set(normalizedArray[3]);
+  }
+
+  public void resetGyro() {
+    gyro.reset();
   }
 }

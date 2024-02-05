@@ -21,6 +21,7 @@ public class AlignAprilCmd extends Command {
     @Override
     public void execute() {
         poseSubsystem.poseDrive();
+        end(true);
     }
 
     @Override

@@ -29,6 +29,7 @@ public class AlignObjectCmd extends Command {
             var target = result.getBestTarget();
             var yaw = target.getYaw();
             driveSubsystem.turnPID(yaw);
+            end(true);
         }
     }
 
