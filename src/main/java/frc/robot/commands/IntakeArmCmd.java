@@ -12,7 +12,7 @@ public class IntakeArmCmd extends Command {
         this.intakeSubsystem = intakeSubsystem;
         this.setpointIndex = setpointIndex;
 
-        addRequirements();
+        addRequirements(intakeSubsystem);
     }
 
     @Override

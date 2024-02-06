@@ -20,7 +20,7 @@ public class TurnAroundCmd extends Command {
   public TurnAroundCmd(DriveSubsystem driveSubsystem, double rotationSpeed){
       this.driveSubsystem = driveSubsystem;
       this.rotationSpeed = rotationSpeed;
-      addRequirements();
+      addRequirements(driveSubsystem);
   }
 
   @Override

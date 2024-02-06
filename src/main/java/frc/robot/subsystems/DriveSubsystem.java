@@ -72,15 +72,11 @@ public class DriveSubsystem extends SubsystemBase {
     double rf = wheelSpeeds.frontRightMetersPerSecond + zRotation;
     double rr = wheelSpeeds.rearRightMetersPerSecond - zRotation;
     
-    double[] speedsArray = {lf, lr, rf, rr};
+    leftMotorFront.set(lf);
+    leftMotorRear.set(lr);
 
-    double[] normalizedArray = normalizeSpeeds(speedsArray);
-
-    leftMotorFront.set(normalizedArray[0]);
-    leftMotorRear.set(normalizedArray[1]);
-
-    rightMotorFront.set(normalizedArray[2]);
-    rightMotorRear.set(normalizedArray[3]);
+    rightMotorFront.set(rf);
+    rightMotorRear.set(rr);
   }
 
   public void turnPID(double yaw) {
