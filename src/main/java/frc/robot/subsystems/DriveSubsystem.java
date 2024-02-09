@@ -11,9 +11,6 @@ import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.ADIS16448_IMU.CalibrationTime;
-import edu.wpi.first.wpilibj.ADIS16448_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -63,6 +60,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void driveMotors(double xSpeed, double ySpeed, double zRotation) {  // First Method: Most optimal
 
+
+
     ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, 0);
     MecanumDriveWheelSpeeds wheelSpeeds = m_MecanumDriveKinematics.toWheelSpeeds(chassisSpeeds);
 
@@ -99,103 +98,6 @@ public class DriveSubsystem extends SubsystemBase {
     return Math.atan2(ySpeed, xSpeed);
   }
 
-  public double getAbsMax(double[] arr) {  // Second Method
-    double max = 0;
-
-    for (double d : arr) {
-      if (d < 0) max = -d >= max ? -d : max;
-      else max = d >= max ? d : max;
-    }
-    return max;
-  }
-
-  public double[] normalizeSpeeds(double[] speedsArray) {
-    double max = getAbsMax(speedsArray);
-
-    if (max > 1) {
-      for (int i = 0; i < speedsArray.length; i++) {
-        speedsArray[i] /= max;
-      }
-    }
-
-    return speedsArray;
-  }
-
-  public void driveMotorsManual(double xSpeed, double ySpeed, double zRotation) {  // Second Method
-    double magnitude = getMagnitude(xSpeed, ySpeed);
-    double angle = getAngle(xSpeed, ySpeed);
-
-    double xComponent = magnitude * Math.cos(angle + Units.degreesToRadians(45));
-    double yComponent = magnitude * Math.sin(angle + Units.degreesToRadians(45));
-
-    double threshold = MechanumDriveConstants.SPEED_THRESHOLD;
-
-    double lf = (xComponent * threshold) + zRotation;
-    double rr = (xComponent * threshold) - zRotation;
-    double lr = (yComponent * threshold) + zRotation;
-    double rf = (yComponent * threshold) - zRotation;
-
-    double[] speedsArray = {lf, lr, rf, rr};
-
-    double[] normalizedArray = normalizeSpeeds(speedsArray);
-
-    leftMotorFront.set(normalizedArray[0]);
-    leftMotorRear.set(normalizedArray[1]);
-
-    rightMotorFront.set(normalizedArray[2]);
-    rightMotorRear.set(normalizedArray[3]);
-  }
-
-  
-  public void driveMotorsCartesian(double xSpeed, double ySpeed, double zRotation) {  // Third Method
-    m_Drive.driveCartesian(xSpeed, ySpeed, zRotation);
-  }
-
-  
-  public void driveMotorsDummy(double xSpeed, double ySpeed, double zRotation) {  // Fourth Method
-    
-    double lf = xSpeed + ySpeed + zRotation;
-    double lr = xSpeed - ySpeed + zRotation;
-    double rf = xSpeed + ySpeed - zRotation;
-    double rr = xSpeed - ySpeed - zRotation;
-
-    double[] speedsArray = {lf, lr, rf, rr};
-
-    double[] normalizedArray = normalizeSpeeds(speedsArray);
-
-    leftMotorFront.set(normalizedArray[0]);
-    leftMotorRear.set(normalizedArray[1]);
-
-    rightMotorFront.set(normalizedArray[2]);
-    rightMotorRear.set(normalizedArray[3]);
-  }
-
-  public void driveMotorsMecanumSwerve(double xSpeed, double ySpeed, double zRotation) {
-    double magnitude = getMagnitude(xSpeed, ySpeed);
-    double angle = getAngle(xSpeed, ySpeed);
-
-    double cartesianAngle = angle + Units.degreesToRadians(45);
-
-    double xComponent = magnitude * Math.cos(cartesianAngle + gyro.getAngle());
-    double yComponent = magnitude * Math.sin(cartesianAngle + gyro.getAngle());
-
-    double threshold = MechanumDriveConstants.SPEED_THRESHOLD;
-
-    double lf = (xComponent * threshold) + zRotation;
-    double rr = (xComponent * threshold) - zRotation;
-    double lr = (yComponent * threshold) + zRotation;
-    double rf = (yComponent * threshold) - zRotation;
-
-    double[] speedsArray = {lf, lr, rf, rr};
-
-    double[] normalizedArray = normalizeSpeeds(speedsArray);
-
-    leftMotorFront.set(normalizedArray[0]);
-    leftMotorRear.set(normalizedArray[1]);
-
-    rightMotorFront.set(normalizedArray[2]);
-    rightMotorRear.set(normalizedArray[3]);
-  }
 
   public void resetGyro() {
     gyro.reset();
